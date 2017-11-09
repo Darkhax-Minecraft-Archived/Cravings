@@ -1,4 +1,4 @@
-package net.darkhax.gamestages;
+package net.darkhax.cravings;
 
 import net.darkhax.bookshelf.lib.LoggingHelper;
 import net.minecraftforge.fml.common.Mod;
