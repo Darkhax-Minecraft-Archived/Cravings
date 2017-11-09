@@ -1,0 +1,23 @@
+[  
+   {  
+      "modid":"cravings",
+      "name":"Cravings",
+      "description":"Adds cravings for random food items. Eating a desired food can give the player benefits.",
+      "version":"${version}",
+      "mcversion":"${mcversion}",
+      "url":"https://minecraft.curseforge.com/projects/cravings",
+      "updateUrl":"",
+      "authorList":[  
+         "Darkhax"
+      ],
+      "credits":"Darkosto and his chat!",
+      "logoFile":"",
+      "screenshots":[  
+
+      ],
+      "parent":"",
+      "dependencies":[  
+
+      ]
+   }
+]
