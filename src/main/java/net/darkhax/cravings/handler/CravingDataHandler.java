@@ -159,9 +159,9 @@ public class CravingDataHandler {
         public void readNBT (Capability<ICustomData> capability, ICustomData instance, EnumFacing side, NBTBase nbt) {
 
             final NBTTagCompound tag = (NBTTagCompound) nbt;
-            instance.setCravedItem(new ItemStack(tag.getCompoundTag("CravedItem")));
-            instance.setTimeToSatisfy(tag.getInteger("TimeToSatisfy"));
-            instance.setTimeToNextAttempt(tag.getInteger("TimeToNextAttempt"));
+            instance.setCravedItem(tag.hasKey("CravedItem") ? new ItemStack(tag.getCompoundTag("CravedItem")) : ItemStack.EMPTY);
+            instance.setTimeToSatisfy(tag.hasKey("TimeToSatisfy") ? tag.getInteger("TimeToSatisfy") : ConfigurationHandler.timeToSatisfy);
+            instance.setTimeToNextAttempt(tag.hasKey("TimeToNextAttempt") ? tag.getInteger("TimeToNextAttempt") : ConfigurationHandler.ticksTillCravingAttempt);
         }
     }
 
