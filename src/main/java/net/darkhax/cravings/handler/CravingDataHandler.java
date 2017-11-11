@@ -1,7 +1,10 @@
 package net.darkhax.cravings.handler;
 
+import javax.annotation.Nonnull;
+
 import net.darkhax.bookshelf.util.PlayerUtils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,6 +29,11 @@ public class CravingDataHandler {
         MinecraftForge.EVENT_BUS.register(new CravingDataHandler());
     }
 
+    public static ICustomData getStageData (@Nonnull EntityPlayer player) {
+
+        return player != null && player.hasCapability(CUSTOM_DATA, EnumFacing.DOWN) ? player.getCapability(CUSTOM_DATA, EnumFacing.DOWN) : null;
+    }
+
     @SubscribeEvent
     public void attachCapabilities (AttachCapabilitiesEvent<Entity> event) {
 
@@ -33,17 +41,6 @@ public class CravingDataHandler {
 
             event.addCapability(new ResourceLocation("cravings", "craving_info"), new Provider());
         }
-    }
-
-    /**
-     * Gets the data from an entity.
-     *
-     * @param entity The entity to pull data from.
-     * @return The data.
-     */
-    public static ICustomData getData (Entity entity) {
-
-        return entity.getCapability(CUSTOM_DATA, EnumFacing.DOWN);
     }
 
     /**
