@@ -3,6 +3,8 @@ package net.darkhax.cravings.handler;
 import javax.annotation.Nonnull;
 
 import net.darkhax.bookshelf.util.PlayerUtils;
+import net.darkhax.cravings.Cravings;
+import net.darkhax.cravings.network.PacketRequestClientSync;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,6 +18,7 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -43,7 +46,7 @@ public class CravingDataHandler {
             event.addCapability(new ResourceLocation("cravings", "craving_info"), new Provider());
         }
     }
-    
+
     /**
      * This event is used to make player data persist after death.
      */
@@ -56,6 +59,17 @@ public class CravingDataHandler {
         clone.setCravedItem(original.getCravedItem());
         clone.setTimeToSatisfy(original.getTimeToSatisfy());
         clone.setTimeToNextAttempt(original.getTimeToNextAttempt());
+    }
+
+    /**
+     * This event is used to sync stage data initially.
+     */
+    @SubscribeEvent
+    public void onEntityJoinWorld (EntityJoinWorldEvent event) {
+
+        if (event.getEntity() instanceof EntityPlayer && event.getWorld().isRemote) {
+            Cravings.NETWORK.sendToServer(new PacketRequestClientSync());
+        }
     }
 
     /**
