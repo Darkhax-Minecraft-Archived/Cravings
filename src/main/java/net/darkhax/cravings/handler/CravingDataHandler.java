@@ -69,11 +69,11 @@ public class CravingDataHandler {
      */
     public static class Default implements ICustomData {
 
-        private ItemStack cravedItem;
+        private ItemStack cravedItem = ItemStack.EMPTY;
 
-        private int timeToSatisfy;
+        private int timeToSatisfy = ConfigurationHandler.timeToSatisfy;
 
-        private int timeToNextAttempt;
+        private int timeToNextAttempt = ConfigurationHandler.ticksTillCravingAttempt;
 
         @Override
         public ItemStack getCravedItem () {
