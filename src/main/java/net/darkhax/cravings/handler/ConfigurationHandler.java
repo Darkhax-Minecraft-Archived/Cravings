@@ -26,6 +26,9 @@ public class ConfigurationHandler {
 
     public static boolean applySatisfiedEffects = true;
     public static boolean applyUnsatisfiedEffects = true;
+    public static int timeToSatisfy = 12000;
+    public static float cravingChance = 0.05f;
+    public static int ticksTillCravingAttempt = 24000;
 
     public ConfigurationHandler (File file) {
 
@@ -50,6 +53,9 @@ public class ConfigurationHandler {
 
         applySatisfiedEffects = config.getBoolean("applySatisfiedEffects", Configuration.CATEGORY_GENERAL, true, "If enabled, players will get benefits for satisfying cravings.");
         applyUnsatisfiedEffects = config.getBoolean("applyUnsatisfiedEffects", Configuration.CATEGORY_GENERAL, true, "If enabled, players will get a penalty for not satisfying cravings.");
+        timeToSatisfy = config.getInt("timeToSatisfy", Configuration.CATEGORY_GENERAL, 12000, 0, Integer.MAX_VALUE, "The amount of time in ticks that a player has to satisfy a craving. Setting to 0 will give an infinite amount of time.");
+        cravingChance = config.getFloat("cravingChance", Configuration.CATEGORY_GENERAL, 0.05f, 0f, 1f, "The % chance that a player will get a craving. 0 means the player will never get cravings, 1 means they will always get cravings, 0.67 means they have a 67% chance of getting a craving.");
+        ticksTillCravingAttempt = config.getInt("ticksTillCravingAttempt", Configuration.CATEGORY_CLIENT, 24000, 0, Integer.MAX_VALUE, "The amount of ticks until the player has another chance at recieving a craving. This time will start ticking down when a player has no active craving.");
 
         if (config.hasChanged()) {
             config.save();
