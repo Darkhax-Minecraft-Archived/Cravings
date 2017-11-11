@@ -16,6 +16,7 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CravingDataHandler {
@@ -41,6 +42,20 @@ public class CravingDataHandler {
 
             event.addCapability(new ResourceLocation("cravings", "craving_info"), new Provider());
         }
+    }
+    
+    /**
+     * This event is used to make player data persist after death.
+     */
+    @SubscribeEvent
+    public void clonePlayer (PlayerEvent.Clone event) {
+
+        final ICustomData original = getStageData(event.getOriginal());
+        final ICustomData clone = getStageData((EntityPlayer) event.getEntity());
+
+        clone.setCravedItem(original.getCravedItem());
+        clone.setTimeToSatisfy(original.getTimeToSatisfy());
+        clone.setTimeToNextAttempt(original.getTimeToNextAttempt());
     }
 
     /**
