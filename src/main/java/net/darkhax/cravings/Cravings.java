@@ -4,6 +4,7 @@ import net.darkhax.bookshelf.lib.LoggingHelper;
 import net.darkhax.bookshelf.lib.WeightedSelector;
 import net.darkhax.cravings.craving.ICraving;
 import net.darkhax.cravings.handler.ConfigurationHandler;
+import net.darkhax.cravings.handler.CravingDataHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
@@ -34,6 +35,7 @@ public class Cravings {
     public void preInit (FMLPreInitializationEvent event) {
 
         config = new ConfigurationHandler(event.getSuggestedConfigurationFile());
+        CravingDataHandler.init();
     }
 
     @EventHandler
