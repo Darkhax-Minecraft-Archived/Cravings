@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import net.darkhax.bookshelf.util.PlayerUtils;
 import net.darkhax.cravings.Cravings;
+import net.darkhax.cravings.craving.ICraving;
 import net.darkhax.cravings.network.PacketRequestClientSync;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,6 +80,10 @@ public class CravingDataHandler {
 
         ItemStack getCravedItem ();
 
+        ICraving getCraving ();
+
+        void setCraving (ICraving craving);
+
         void setCravedItem (ItemStack craved);
 
         int getTimeToSatisfy ();
@@ -96,6 +101,8 @@ public class CravingDataHandler {
     public static class Default implements ICustomData {
 
         private ItemStack cravedItem = ItemStack.EMPTY;
+
+        private ICraving craving;
 
         private int timeToSatisfy = ConfigurationHandler.timeToSatisfy;
 
@@ -136,6 +143,18 @@ public class CravingDataHandler {
 
             this.timeToNextAttempt = time;
         }
+
+        @Override
+        public ICraving getCraving () {
+
+            return this.craving;
+        }
+
+        @Override
+        public void setCraving (ICraving craving) {
+
+            this.craving = craving;
+        }
     }
 
     /**
@@ -152,6 +171,11 @@ public class CravingDataHandler {
             tag.setInteger("TimeToSatisfy", instance.getTimeToSatisfy());
             tag.setInteger("TimeToNextAttempt", instance.getTimeToNextAttempt());
 
+            if (instance.getCraving() != null) {
+
+                tag.setString("CravingId", instance.getCraving().getRegistryName().toString());
+            }
+
             return tag;
         }
 
@@ -162,6 +186,11 @@ public class CravingDataHandler {
             instance.setCravedItem(tag.hasKey("CravedItem") ? new ItemStack(tag.getCompoundTag("CravedItem")) : ItemStack.EMPTY);
             instance.setTimeToSatisfy(tag.hasKey("TimeToSatisfy") ? tag.getInteger("TimeToSatisfy") : ConfigurationHandler.timeToSatisfy);
             instance.setTimeToNextAttempt(tag.hasKey("TimeToNextAttempt") ? tag.getInteger("TimeToNextAttempt") : ConfigurationHandler.ticksTillCravingAttempt);
+
+            if (tag.hasKey("CravingId")) {
+
+                instance.setCraving(Cravings.CRAVING_REGISTRY.getValue(new ResourceLocation(tag.getString("CravingId"))));
+            }
         }
     }
 
