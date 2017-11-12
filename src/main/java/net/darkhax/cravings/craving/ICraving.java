@@ -2,12 +2,13 @@ package net.darkhax.cravings.craving;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 /**
  * This interface is used to define a craving. It can be used to create a wide range of craving
  * effects.
  */
-public interface ICraving {
+public interface ICraving extends IForgeRegistryEntry<ICraving> {
 
     /**
      * Gets the food ItemStack being craved.
