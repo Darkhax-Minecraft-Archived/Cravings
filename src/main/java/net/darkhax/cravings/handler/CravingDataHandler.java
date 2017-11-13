@@ -70,6 +70,7 @@ public class CravingDataHandler {
         clone.setCravedItem(original.getCravedItem());
         clone.setTimeToSatisfy(original.getTimeToSatisfy());
         clone.setTimeToNextAttempt(original.getTimeToNextAttempt());
+        clone.setCraving(original.getCraving());
     }
 
     /**
