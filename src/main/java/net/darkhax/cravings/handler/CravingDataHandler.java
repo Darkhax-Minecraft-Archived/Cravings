@@ -103,6 +103,8 @@ public class CravingDataHandler {
         int getTimeToNextAttempt ();
 
         void setTimeToNextAttempt (int time);
+
+        void resetCravings ();
     }
 
     /**
@@ -164,6 +166,15 @@ public class CravingDataHandler {
         public void setCraving (ICraving craving) {
 
             this.craving = craving;
+        }
+
+        @Override
+        public void resetCravings () {
+
+            this.cravedItem = ItemStack.EMPTY;
+            this.craving = null;
+            this.timeToSatisfy = 0;
+            this.timeToNextAttempt = ConfigurationHandler.ticksTillCravingAttempt;
         }
     }
 
