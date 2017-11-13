@@ -27,7 +27,11 @@ public class SatisfactionHandler {
         // Player has satisfied their craving!
         if (data.getCraving() != null && StackUtils.areStacksSimilar(data.getCravedItem(), stack)) {
 
-            data.getCraving().onCravingSatisfied(player);
+            if (ConfigurationHandler.applySatisfiedEffects) {
+
+                data.getCraving().onCravingSatisfied(player);
+            }
+
             player.sendMessage(new TextComponentTranslation("cravings.info.success", data.getCravedItem().getDisplayName()));
             data.resetCravings();
         }
@@ -49,7 +53,11 @@ public class SatisfactionHandler {
                 // Player has not satisfied the craving.
                 if (data.getTimeToSatisfy() <= 0) {
 
-                    data.getCraving().onCravingUnsatisifed(event.player);
+                    if (ConfigurationHandler.applyUnsatisfiedEffects) {
+
+                        data.getCraving().onCravingUnsatisifed(event.player);
+                    }
+
                     event.player.sendMessage(new TextComponentTranslation("cravings.info.failed", data.getCravedItem().getDisplayName()));
                     data.resetCravings();
                 }
