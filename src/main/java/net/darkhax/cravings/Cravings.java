@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = "cravings", name = "Cravings", version = "@VERSION@", dependencies = "", certificateFingerprint = "@FINGERPRINT@")
+@Mod(modid = "cravings", name = "Cravings", version = "@VERSION@", dependencies = "required-after:bookshelf@[2.2.494,);", certificateFingerprint = "@FINGERPRINT@")
 public class Cravings {
 
     /**
