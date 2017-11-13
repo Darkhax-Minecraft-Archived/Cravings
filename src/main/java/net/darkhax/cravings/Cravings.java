@@ -1,8 +1,12 @@
 package net.darkhax.cravings;
 
+import net.darkhax.bookshelf.BookshelfRegistry;
 import net.darkhax.bookshelf.lib.LoggingHelper;
+import net.darkhax.bookshelf.lib.WeightedSelector.WeightedEntry;
 import net.darkhax.bookshelf.lib.WeightedSelectorRegistry;
 import net.darkhax.bookshelf.network.NetworkHandler;
+import net.darkhax.cravings.command.CommandCravingTree;
+import net.darkhax.cravings.craving.CravingRandomFood;
 import net.darkhax.cravings.craving.ICraving;
 import net.darkhax.cravings.handler.ConfigurationHandler;
 import net.darkhax.cravings.handler.CravingDataHandler;
@@ -50,6 +54,9 @@ public class Cravings {
         config = new ConfigurationHandler(event.getSuggestedConfigurationFile());
         CravingDataHandler.init();
         MinecraftForge.EVENT_BUS.register(new SatisfactionHandler());
+        BookshelfRegistry.addCommand(new CommandCravingTree());
+
+        CRAVING_REGISTRY.addEntry(new CravingRandomFood(), 25, "random");
     }
 
     @EventHandler
