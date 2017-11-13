@@ -2,11 +2,13 @@ package net.darkhax.cravings.network;
 
 import net.darkhax.bookshelf.network.SerializableMessage;
 import net.darkhax.bookshelf.util.PlayerUtils;
+import net.darkhax.cravings.Cravings;
 import net.darkhax.cravings.handler.CravingDataHandler;
 import net.darkhax.cravings.handler.CravingDataHandler.ICustomData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,6 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PacketSyncClient extends SerializableMessage {
 
     private ItemStack cravedItem = ItemStack.EMPTY;
+
+    private String cravingId;
 
     private int timeToSatisfy = 0;
 
@@ -33,6 +37,11 @@ public class PacketSyncClient extends SerializableMessage {
         this.cravedItem = data.getCravedItem();
         this.timeToSatisfy = data.getTimeToSatisfy();
         this.timeToNextAttempt = data.getTimeToNextAttempt();
+
+        if (data.getCraving() != null) {
+
+            this.cravingId = data.getCraving().getRegistryName().toString();
+        }
     }
 
     @Override
@@ -47,6 +56,11 @@ public class PacketSyncClient extends SerializableMessage {
             info.setCravedItem(this.cravedItem);
             info.setTimeToSatisfy(this.timeToSatisfy);
             info.setTimeToNextAttempt(this.timeToNextAttempt);
+
+            if (this.cravingId != null) {
+
+                info.setCraving(Cravings.CRAVING_REGISTRY.getValue(new ResourceLocation(this.cravingId)));
+            }
         });
 
         return null;
