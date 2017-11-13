@@ -6,8 +6,10 @@ import net.darkhax.bookshelf.network.NetworkHandler;
 import net.darkhax.cravings.craving.ICraving;
 import net.darkhax.cravings.handler.ConfigurationHandler;
 import net.darkhax.cravings.handler.CravingDataHandler;
+import net.darkhax.cravings.handler.SatisfactionHandler;
 import net.darkhax.cravings.network.PacketRequestClientSync;
 import net.darkhax.cravings.network.PacketSyncClient;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
@@ -47,6 +49,7 @@ public class Cravings {
         NETWORK.register(PacketSyncClient.class, Side.CLIENT);
         config = new ConfigurationHandler(event.getSuggestedConfigurationFile());
         CravingDataHandler.init();
+        MinecraftForge.EVENT_BUS.register(new SatisfactionHandler());
     }
 
     @EventHandler
