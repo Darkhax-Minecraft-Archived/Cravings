@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import net.darkhax.bookshelf.util.PlayerUtils;
+import net.darkhax.bookshelf.util.StackUtils;
+import net.darkhax.cravings.Cravings;
+import net.darkhax.cravings.craving.ICraving;
 import net.darkhax.cravings.handler.CravingDataHandler.ICustomData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -18,6 +21,15 @@ public class SatisfactionHandler {
 
     public static void onPlayerEatItem (EntityPlayer player, ItemStack stack) {
 
+        final ICustomData data = CravingDataHandler.getStageData(player);
+
+        // Player has satisfied their craving!
+        if (data.getCraving() != null && StackUtils.areStacksSimilar(data.getCravedItem(), stack)) {
+
+            data.getCraving().onCravingSatisfied(player);
+            player.sendMessage(new TextComponentTranslation("cravings.info.success", data.getCravedItem().getDisplayName()));
+            data.resetCravings();
+        }
     }
 
     @SubscribeEvent
@@ -39,6 +51,24 @@ public class SatisfactionHandler {
                     data.getCraving().onCravingUnsatisifed(event.player);
                     event.player.sendMessage(new TextComponentTranslation("cravings.info.failed", data.getCravedItem().getDisplayName()));
                     data.resetCravings();
+                }
+            }
+
+            // Player doesn't have a craving. Tick the attempt tracker.
+            else {
+
+                data.setTimeToNextAttempt(data.getTimeToNextAttempt() - 1);
+
+                // Player has ticked down enough to get a craving
+                if (data.getTimeToNextAttempt() <= 0) {
+
+                    data.resetCravings();
+
+                    // TODO do percent check
+                    final ICraving craving = Cravings.CRAVING_REGISTRY.getRandomEntry().getEntry();
+                    data.setCraving(craving);
+                    data.setCravedItem(craving.getCravedItem());
+                    data.setTimeToSatisfy(ConfigurationHandler.timeToSatisfy);
                 }
             }
         }

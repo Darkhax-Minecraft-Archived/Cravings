@@ -11,3 +11,4 @@ commands.cravings.set.target=You suddenly have a craving for %s.
 
 #Misc
 cravings.info.failed=You failed to satisfy your craving for %s.
+cravings.info.success=You satisfied your craving for %s.
