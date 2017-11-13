@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -36,6 +37,16 @@ public class CravingDataHandler {
     public static ICustomData getStageData (@Nonnull EntityPlayer player) {
 
         return player != null && player.hasCapability(CUSTOM_DATA, EnumFacing.DOWN) ? player.getCapability(CUSTOM_DATA, EnumFacing.DOWN) : null;
+    }
+
+    public static void setCravingData (EntityPlayer player, ICraving craving, int time) {
+
+        final ICustomData data = CravingDataHandler.getStageData(player);
+        data.setCraving(craving);
+        data.setTimeToSatisfy(time);
+        data.setCravedItem(craving.getCravedItem());
+
+        player.sendMessage(new TextComponentTranslation("commands.cravings.set.target", data.getCravedItem().getDisplayName()));
     }
 
     @SubscribeEvent
