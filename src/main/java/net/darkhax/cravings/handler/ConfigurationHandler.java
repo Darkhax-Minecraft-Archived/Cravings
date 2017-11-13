@@ -18,7 +18,7 @@ public class ConfigurationHandler {
 
     public static Configuration config;
 
-    private static final String[] DEFAULT_SATISFIED_EFFECTS = { "minecraft:speed, 60000", "minecraft:haste, 6000", "minecraft:regeneration, 100, 2" };
+    private static final String[] DEFAULT_SATISFIED_EFFECTS = { "minecraft:speed, 6000", "minecraft:haste, 6000", "minecraft:regeneration, 100, 2" };
     private static final String[] DEFUALT_UNSATISFIED_EFFECTS = { "minecraft:slowness", "minecraft:nausea", "minecraft:hunger, 100", "minecraft:weakness, 6000" };
 
     public static List<PotionEffect> satisfiedEffects = new ArrayList<>();
