@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import net.darkhax.bookshelf.util.MathsUtils;
 import net.darkhax.bookshelf.util.PlayerUtils;
 import net.darkhax.bookshelf.util.StackUtils;
 import net.darkhax.cravings.Cravings;
@@ -64,11 +65,14 @@ public class SatisfactionHandler {
 
                     data.resetCravings();
 
-                    // TODO do percent check
-                    final ICraving craving = Cravings.CRAVING_REGISTRY.getRandomEntry().getEntry();
-                    data.setCraving(craving);
-                    data.setCravedItem(craving.getCravedItem());
-                    data.setTimeToSatisfy(ConfigurationHandler.timeToSatisfy);
+                    // Player has a chance to get a craving.
+                    if (MathsUtils.tryPercentage(ConfigurationHandler.cravingChance)) {
+
+                        final ICraving craving = Cravings.CRAVING_REGISTRY.getRandomEntry().getEntry();
+                        data.setCraving(craving);
+                        data.setCravedItem(craving.getCravedItem());
+                        data.setTimeToSatisfy(ConfigurationHandler.timeToSatisfy);
+                    }
                 }
             }
         }
