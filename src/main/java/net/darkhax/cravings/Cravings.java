@@ -2,7 +2,6 @@ package net.darkhax.cravings;
 
 import net.darkhax.bookshelf.BookshelfRegistry;
 import net.darkhax.bookshelf.lib.LoggingHelper;
-import net.darkhax.bookshelf.lib.WeightedSelector.WeightedEntry;
 import net.darkhax.bookshelf.lib.WeightedSelectorRegistry;
 import net.darkhax.bookshelf.network.NetworkHandler;
 import net.darkhax.cravings.command.CommandCravingTree;
