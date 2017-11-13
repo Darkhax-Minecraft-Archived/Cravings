@@ -2,7 +2,6 @@ package net.darkhax.cravings.handler;
 
 import javax.annotation.Nonnull;
 
-import net.darkhax.bookshelf.util.PlayerUtils;
 import net.darkhax.cravings.Cravings;
 import net.darkhax.cravings.craving.ICraving;
 import net.darkhax.cravings.network.PacketRequestClientSync;
@@ -42,7 +41,7 @@ public class CravingDataHandler {
     @SubscribeEvent
     public void attachCapabilities (AttachCapabilitiesEvent<Entity> event) {
 
-        if (PlayerUtils.isPlayerReal(event.getObject())) {
+        if (event.getObject() instanceof EntityPlayer) {
 
             event.addCapability(new ResourceLocation("cravings", "craving_info"), new Provider());
         }
