@@ -18,7 +18,7 @@ public class ConfigurationHandler {
 
     public static Configuration config;
 
-    private static final String[] DEFAULT_SATISFIED_EFFECTS = { "minecraft:speed, 60000", "minecraft:haste, 6000", "minecraft:, 6000", "minecraft:regeneration, 100, 2" };
+    private static final String[] DEFAULT_SATISFIED_EFFECTS = { "minecraft:speed, 60000", "minecraft:haste, 6000", "minecraft:regeneration, 100, 2" };
     private static final String[] DEFUALT_UNSATISFIED_EFFECTS = { "minecraft:slowness", "minecraft:nausea", "minecraft:hunger, 100", "minecraft:weakness, 6000" };
 
     public static List<PotionEffect> satisfiedEffects = new ArrayList<>();
@@ -67,16 +67,16 @@ public class ConfigurationHandler {
         final String[] args = effectString.split(", ");
 
         // Minimum args check
-        if (args.length == 1) {
+        if (args.length < 1) {
 
-            Cravings.LOG.noticableWarning(false, Arrays.asList("The config line " + effectString + " is not valid. At least two arguments are needed. Use , and a space to split args."));
+            Cravings.LOG.noticableWarning(false, Arrays.asList("The config line " + effectString + " is not valid. At least one arguments are needed. Use , and a space to split args."));
             return null;
         }
 
         // Potion id validation
         if (!ForgeRegistries.POTIONS.containsKey(new ResourceLocation(args[0]))) {
 
-            Cravings.LOG.noticableWarning(false, Arrays.asList("No potion found for id " + args[0]));
+            Cravings.LOG.noticableWarning(false, Arrays.asList("No potion found for id " + args[0] + " config line: " + effectString));
             return null;
         }
 
