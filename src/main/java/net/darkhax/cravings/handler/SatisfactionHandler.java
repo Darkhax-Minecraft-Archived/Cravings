@@ -13,7 +13,10 @@ import net.darkhax.cravings.handler.CravingDataHandler.ICustomData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -29,7 +32,16 @@ public class SatisfactionHandler {
 
             if (ConfigurationHandler.applySatisfiedEffects) {
 
-                data.getCraving().onCravingSatisfied(player);
+                try {
+
+                    data.getCraving().onCravingSatisfied(player);
+                }
+
+                catch (final Exception e) {
+
+                    player.sendMessage(new TextComponentString("[Cravings] Exception applying craving reward. Check your console and report!").setStyle(new Style().setColor(TextFormatting.RED)));
+                    Cravings.LOG.catching(e);
+                }
             }
 
             player.sendMessage(new TextComponentTranslation("cravings.info.success", data.getCravedItem().getDisplayName()));
@@ -55,7 +67,16 @@ public class SatisfactionHandler {
 
                     if (ConfigurationHandler.applyUnsatisfiedEffects) {
 
-                        data.getCraving().onCravingUnsatisifed(event.player);
+                        try {
+
+                            data.getCraving().onCravingUnsatisifed(event.player);
+                        }
+
+                        catch (final Exception e) {
+
+                            event.player.sendMessage(new TextComponentString("[Cravings] Exception applying craving punishment. Check your console and report!").setStyle(new Style().setColor(TextFormatting.RED)));
+                            Cravings.LOG.catching(e);
+                        }
                     }
 
                     event.player.sendMessage(new TextComponentTranslation("cravings.info.failed", data.getCravedItem().getDisplayName()));
