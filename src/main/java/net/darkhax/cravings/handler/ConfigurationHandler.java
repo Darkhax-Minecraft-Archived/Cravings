@@ -21,6 +21,7 @@ public class ConfigurationHandler {
     private static final String[] DEFAULT_SATISFIED_EFFECTS = { "minecraft:speed, 6000", "minecraft:haste, 6000", "minecraft:regeneration, 100, 2" };
     private static final String[] DEFUALT_UNSATISFIED_EFFECTS = { "minecraft:slowness", "minecraft:nausea", "minecraft:hunger, 100", "minecraft:weakness, 6000" };
 
+    public static List<String> errors = new ArrayList<>();
     public static List<PotionEffect> satisfiedEffects = new ArrayList<>();
     public static List<PotionEffect> unsatisfiedEffects = new ArrayList<>();
 
@@ -38,17 +39,38 @@ public class ConfigurationHandler {
 
     private void syncConfigData () {
 
+        errors.clear();
         satisfiedEffects.clear();
         unsatisfiedEffects.clear();
 
         for (final String entry : config.getStringList("cravingSatisfied", Configuration.CATEGORY_GENERAL, DEFAULT_SATISFIED_EFFECTS, "This list contains potion id info for the potion effects that can potentially be given to a player when they satisfy a craving. There are three total arguments, but only the first one is needed. The first argument is the id of the potion effect, this is the string id and not the numeric one! The second argument is the amount of time the player will get the buff for in ticks, default is 200 ticks (10 seconds), the last argument is the amplifier for the potion effect, default is 0. Arguments are split up using a , character and a space.")) {
 
-            satisfiedEffects.add(this.getEffectFromString(entry));
+            final PotionEffect effect = this.getEffectFromString(entry);
+
+            if (effect != null) {
+
+                satisfiedEffects.add(effect);
+            }
+
+            else {
+
+                errors.add("Could not add craving reward for: " + entry);
+            }
         }
 
         for (final String entry : config.getStringList("cravingUnsatisfied", Configuration.CATEGORY_GENERAL, DEFUALT_UNSATISFIED_EFFECTS, "This list contains potion id info for the potion effects that can potentially be given to a player when they fail to satisfy a craving. There are three total arguments, but only the first one is needed. The first argument is the id of the potion effect, this is the string id and not the numeric one! The second argument is the amount of time the player will get the buff for in ticks, default is 200 ticks (10 seconds), the last argument is the amplifier for the potion effect, default is 0. Arguments are split up using a , character and a space.")) {
 
-            unsatisfiedEffects.add(this.getEffectFromString(entry));
+            final PotionEffect effect = this.getEffectFromString(entry);
+
+            if (effect != null) {
+
+                unsatisfiedEffects.add(effect);
+            }
+
+            else {
+
+                errors.add("Could not add craving punishment for: " + entry);
+            }
         }
 
         applySatisfiedEffects = config.getBoolean("applySatisfiedEffects", Configuration.CATEGORY_GENERAL, true, "If enabled, players will get benefits for satisfying cravings.");

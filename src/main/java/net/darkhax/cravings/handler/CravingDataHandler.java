@@ -12,7 +12,10 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -80,7 +83,15 @@ public class CravingDataHandler {
     public void onEntityJoinWorld (EntityJoinWorldEvent event) {
 
         if (event.getEntity() instanceof EntityPlayer && event.getWorld().isRemote) {
+
+            // Sync data from server to client
             Cravings.NETWORK.sendToServer(new PacketRequestClientSync());
+
+            // Tell the player about errors
+            for (final String error : ConfigurationHandler.errors) {
+
+                event.getEntity().sendMessage(new TextComponentString("[Cravings] " + error).setStyle(new Style().setColor(TextFormatting.RED)));
+            }
         }
     }
 
