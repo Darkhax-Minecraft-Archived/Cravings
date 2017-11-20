@@ -98,9 +98,7 @@ public class SatisfactionHandler {
                     if (MathsUtils.tryPercentage(ConfigurationHandler.cravingChance)) {
 
                         final ICraving craving = Cravings.CRAVING_REGISTRY.getRandomEntry().getEntry();
-                        data.setCraving(craving);
-                        data.setCravedItem(craving.getCravedItem());
-                        data.setTimeToSatisfy(ConfigurationHandler.timeToSatisfy);
+                        CravingDataHandler.setCravingData(event.player, craving, ConfigurationHandler.timeToSatisfy);
                     }
                 }
             }
