@@ -34,8 +34,9 @@ public class CommandFoods extends Command {
 
         sender.sendMessage(new TextComponentTranslation("commands.cravings.foods"));
         Cravings.LOG.info("Printing out {} detected foods.", CravingRandomFood.FOODS.size());
+
         for (final ItemStack foodStack : CravingRandomFood.FOODS) {
-            
+
             Cravings.LOG.info(foodStack.getDisplayName());
         }
     }
