@@ -1,5 +1,7 @@
 package net.darkhax.cravings;
 
+import java.io.File;
+
 import net.darkhax.bookshelf.BookshelfRegistry;
 import net.darkhax.bookshelf.lib.LoggingHelper;
 import net.darkhax.bookshelf.lib.WeightedSelectorRegistry;
@@ -50,7 +52,6 @@ public class Cravings {
 
         NETWORK.register(PacketRequestClientSync.class, Side.SERVER);
         NETWORK.register(PacketSyncClient.class, Side.CLIENT);
-        config = new ConfigurationHandler(event.getSuggestedConfigurationFile());
         CravingDataHandler.init();
         MinecraftForge.EVENT_BUS.register(new SatisfactionHandler());
         BookshelfRegistry.addCommand(new CommandCravingTree());
@@ -61,7 +62,7 @@ public class Cravings {
     @EventHandler
     public void init (FMLInitializationEvent event) {
 
-        // Register stuff here
+        config = new ConfigurationHandler(new File("cravings.cfg"));
     }
 
     @EventHandler
