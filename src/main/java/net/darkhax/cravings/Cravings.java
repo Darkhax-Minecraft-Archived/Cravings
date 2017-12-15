@@ -60,7 +60,7 @@ public class Cravings {
     @EventHandler
     public void init (FMLInitializationEvent event) {
 
-        config = new ConfigurationHandler(new File("cravings.cfg"));
+        config = new ConfigurationHandler(new File("config/cravings.cfg"));
         CRAVING_REGISTRY.addEntry(new CravingRandomFood(), 25, "random");
     }
 
