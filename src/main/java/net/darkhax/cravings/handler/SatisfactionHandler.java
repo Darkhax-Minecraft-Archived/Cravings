@@ -52,7 +52,7 @@ public class SatisfactionHandler {
     @SubscribeEvent
     public void onLivingTick (TickEvent.PlayerTickEvent event) {
 
-        if (PlayerUtils.isPlayerReal(event.player)) {
+        if (PlayerUtils.isPlayerReal(event.player) && !event.player.isCreative()) {
 
             final ICustomData data = CravingDataHandler.getStageData(event.player);
 
