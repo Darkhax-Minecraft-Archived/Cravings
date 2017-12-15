@@ -55,14 +55,13 @@ public class Cravings {
         CravingDataHandler.init();
         MinecraftForge.EVENT_BUS.register(new SatisfactionHandler());
         BookshelfRegistry.addCommand(new CommandCravingTree());
-
-        CRAVING_REGISTRY.addEntry(new CravingRandomFood(), 25, "random");
     }
 
     @EventHandler
     public void init (FMLInitializationEvent event) {
 
         config = new ConfigurationHandler(new File("cravings.cfg"));
+        CRAVING_REGISTRY.addEntry(new CravingRandomFood(), 25, "random");
     }
 
     @EventHandler
