@@ -9,6 +9,8 @@ commands.cravings.nocraving=The craving %s is not valid.
 commands.cravings.set.sender=%s now has a craving for %s
 commands.cravings.set.target=You suddenly have a craving for %s.
 
+commands.cravings.foods=Dumping detected foods to the console.
+
 #Misc
 cravings.info.failed=You failed to satisfy your craving for %s.
 cravings.info.success=You satisfied your craving for %s.

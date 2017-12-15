@@ -9,6 +9,7 @@ public class CommandCravingTree extends CommandTree {
 
         this.addSubcommand(new CommandSetCraving());
         this.addSubcommand(new CommandCravingInfo());
+        this.addSubcommand(new CommandFoods());
     }
 
     @Override
