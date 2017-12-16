@@ -105,10 +105,10 @@ public class ConfigurationHandler {
         final Potion effect = ForgeRegistries.POTIONS.getValue(new ResourceLocation(args[0]));
 
         // If duration argument is given, try to set it. Otherwise default to 200 (10 seconds)
-        final int duration = args.length == 2 && NumberUtils.isCreatable(args[1]) ? NumberUtils.createInteger(args[1]) : 200;
+        final int duration = args.length >= 2 && NumberUtils.isCreatable(args[1]) ? NumberUtils.createInteger(args[1]) : 200;
 
         // If amplifier arg is given, try to set it. Otherwise default to 0 (level 1)
-        final int amplifier = args.length == 3 && NumberUtils.isCreatable(args[2]) ? NumberUtils.createInteger(args[2]) : 0;
+        final int amplifier = args.length >= 3 && NumberUtils.isCreatable(args[2]) ? NumberUtils.createInteger(args[2]) : 0;
 
         return new PotionEffect(effect, duration, amplifier);
     }
