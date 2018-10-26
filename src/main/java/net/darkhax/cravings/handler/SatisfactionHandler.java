@@ -18,6 +18,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -109,7 +110,7 @@ public class SatisfactionHandler {
     // to track a reference to it ourselves.
     private static final Map<UUID, ItemStack> FOOD_IN_USE = new HashMap<>();
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onEntityStartUsing (LivingEntityUseItemEvent.Start event) {
 
         // Player has started eating. Track them in map.
@@ -119,7 +120,7 @@ public class SatisfactionHandler {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onEntityStopUsing (LivingEntityUseItemEvent.Stop event) {
 
         // Player stopped eating without finishing. Stop tracking them.
@@ -129,7 +130,7 @@ public class SatisfactionHandler {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onItemUsed (LivingEntityUseItemEvent.Finish event) {
 
         // Player finished eating the item, and they are still being tracked.
