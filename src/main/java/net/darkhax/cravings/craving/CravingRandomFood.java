@@ -3,6 +3,7 @@ package net.darkhax.cravings.craving;
 import net.darkhax.bookshelf.lib.Constants;
 import net.darkhax.bookshelf.util.StackUtils;
 import net.darkhax.cravings.Cravings;
+import net.darkhax.cravings.handler.ConfigurationHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -49,7 +50,22 @@ public class CravingRandomFood extends CravingDefault {
 
             if (item instanceof ItemFood) {
 
-                list.addAll(StackUtils.findVariations(item));
+                final ItemFood food = (ItemFood) item;
+                
+                for (ItemStack subItem : StackUtils.getAllItems(item)) {
+                    
+                    if (!ConfigurationHandler.allowFoodsWithNoValue && food.getHealAmount(subItem) <= 0) {
+                        
+                        continue;
+                    }
+                    
+                    if (!ConfigurationHandler.allowFoodsWithNoSaturation && food.getSaturationModifier(subItem) <= 0) {
+                        
+                        continue;
+                    }
+                    
+                    list.addAll(StackUtils.findVariations(item));
+                }
             }
         }
 

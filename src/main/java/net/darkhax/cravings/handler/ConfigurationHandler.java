@@ -31,6 +31,9 @@ public class ConfigurationHandler {
     public static float cravingChance = 0.05f;
     public static int ticksTillCravingAttempt = 24000;
 
+    public static boolean allowFoodsWithNoValue;
+    public static boolean allowFoodsWithNoSaturation;
+    
     public ConfigurationHandler (File file) {
 
         config = new Configuration(file);
@@ -79,6 +82,9 @@ public class ConfigurationHandler {
         cravingChance = config.getFloat("cravingChance", Configuration.CATEGORY_GENERAL, 0.05f, 0f, 1f, "The % chance that a player will get a craving. 0 means the player will never get cravings, 1 means they will always get cravings, 0.67 means they have a 67% chance of getting a craving.");
         ticksTillCravingAttempt = config.getInt("ticksTillCravingAttempt", Configuration.CATEGORY_GENERAL, 24000, 0, Integer.MAX_VALUE, "The amount of ticks until the player has another chance at recieving a craving. This time will start ticking down when a player has no active craving.");
 
+        allowFoodsWithNoValue = config.getBoolean("allowNoValue", "general", false, "Should foods with no food value be allowed for cravings?");
+        allowFoodsWithNoSaturation = config.getBoolean("allowNoSaturation", "general", false, "Should foods with no food saturation be allowed for cravings?");
+        
         if (config.hasChanged()) {
             config.save();
         }
