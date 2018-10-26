@@ -33,6 +33,7 @@ public class ConfigurationHandler {
 
     public static boolean allowFoodsWithNoValue;
     public static boolean allowFoodsWithNoSaturation;
+    public static boolean allowBadFood;
     
     public ConfigurationHandler (File file) {
 
@@ -84,6 +85,7 @@ public class ConfigurationHandler {
 
         allowFoodsWithNoValue = config.getBoolean("allowNoValue", "general", false, "Should foods with no food value be allowed for cravings?");
         allowFoodsWithNoSaturation = config.getBoolean("allowNoSaturation", "general", false, "Should foods with no food saturation be allowed for cravings?");
+        allowBadFood = config.getBoolean("allowBadFood", "general", false, "Should foods with negative potion effects be allowed for cravings?");
         
         if (config.hasChanged()) {
             config.save();

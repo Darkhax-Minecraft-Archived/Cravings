@@ -1,5 +1,7 @@
 package net.darkhax.cravings.craving;
 
+import java.lang.reflect.Field;
+
 import net.darkhax.bookshelf.lib.Constants;
 import net.darkhax.bookshelf.util.StackUtils;
 import net.darkhax.cravings.Cravings;
@@ -7,8 +9,10 @@ import net.darkhax.cravings.handler.ConfigurationHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 /**
  * This craving is used as the default implementation.
@@ -51,6 +55,12 @@ public class CravingRandomFood extends CravingDefault {
             if (item instanceof ItemFood) {
 
                 final ItemFood food = (ItemFood) item;
+                final PotionEffect effect = getPotion(food);
+                
+                if (!ConfigurationHandler.allowBadFood && effect != null && effect.getPotion().isBadEffect()) {
+                    
+                    continue;
+                }
                 
                 for (ItemStack subItem : StackUtils.getAllItems(item)) {
                     
@@ -71,5 +81,20 @@ public class CravingRandomFood extends CravingDefault {
 
         Cravings.LOG.info("Food list built. {} items found. Took {}ms", list.size(), System.currentTimeMillis() - time);
         return list;
+    }
+    
+    private static Field foodEffectField = ReflectionHelper.findField(ItemFood.class, "potionId", "field_77851_ca");
+    
+    private static PotionEffect getPotion(ItemFood food) {
+        
+        try {
+            
+            return (PotionEffect) foodEffectField.get(food);
+        }
+        
+        catch (Exception e) {
+            
+            return null;
+        }
     }
 }
